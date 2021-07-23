@@ -70,7 +70,8 @@ public class AircraftQueueApplication {
 		requests.add(enqueueAc1);
 		requests.add(enqueueAc2);
 		requests.add(enqueueAc3);
-
-		aqm.aqmRequestProcess(requests);
+		
+		// loop through our request list and send each to the AircraftQueueManager
+		requests.stream().forEach(r -> aqm.aqmRequestProcess(r));
 	}
 }

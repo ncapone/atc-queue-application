@@ -64,29 +64,25 @@ public class AircraftQueueManager {
 	}
 
 	/**
-	 * Handler for the requests sent from the main method. Normally there would be
-	 * some kind of interface to send a single request but for this demo we just
-	 * simulate a bunch of requests at once.
+	 * Handler for the requests sent from the main method. 
 	 * 
 	 * @param requests
 	 */
-	public void aqmRequestProcess(List<QueueRequest> requests) {
-		requests.stream().forEach(r -> {
-			if (r.getRequestType().equals(RequestType.SYSTEM_START)) {
-				log.info("Received request: " + RequestType.SYSTEM_START);
-				this.systemStart();
-			}
+	public void aqmRequestProcess(QueueRequest request) {
+		if (request.getRequestType().equals(RequestType.SYSTEM_START)) {
+			log.info("Received request: " + RequestType.SYSTEM_START);
+			this.systemStart();
+		}
 
-			if (r.getRequestType().equals(RequestType.ENQUEUE)) {
-				log.info("Received request: " + r.getAircraft().toString());
-				this.enqueueAircraft(r.getAircraft());
-			}
+		if (request.getRequestType().equals(RequestType.ENQUEUE)) {
+			log.info("Received request: " + request.getAircraft().toString());
+			this.enqueueAircraft(request.getAircraft());
+		}
 
-			if (r.getRequestType().equals(RequestType.DEQUEUE)) {
-				log.info("Received request: " + r);
-				this.dequeueNextAircraft();
-			}
-		});
+		if (request.getRequestType().equals(RequestType.DEQUEUE)) {
+			log.info("Received request: " + request);
+			this.dequeueNextAircraft();
+		}
 	}
 
 	private void logQueueSize() {
